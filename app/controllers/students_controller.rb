@@ -8,9 +8,24 @@ class StudentsController < ApplicationController
   def show
   end
 
+  def activate
+    @student = Student.find(student_params[:id])
+    if @student.active == true
+      @student.active = false
+    else
+      @student.active = true
+    end
+    redirect_to student_path(@student)
+  end
+
   private
 
     def set_student
       @student = Student.find(params[:id])
     end
+
+    def student_params
+      params.permit(:active)
+    end
+    
 end
